@@ -1,8 +1,0 @@
-#LWP-Cookies-1.0
-Set-Cookie3: accepting=1; path="/"; domain=.reference.com; path_spec; expires="2013-11-07 06:19:43Z"; version=0
-Set-Cookie3: bid=UJn9fzrwQUVv0UYj; path="/"; domain=.reference.com; path_spec; expires="2014-11-07 06:19:43Z"; version=0
-Set-Cookie3: cu.wz=0; path="/"; domain=.reference.com; path_spec; expires="2013-11-07 06:19:43Z"; version=0
-Set-Cookie3: dcc=*~*~*~*~*~*~*~*~; path="/"; domain=.reference.com; path_spec; expires="2013-11-12 08:32:24Z"; version=0
-Set-Cookie3: iv_dic=1-0; path="/"; domain=.reference.com; path_spec; expires="2012-11-13 08:32:24Z"; version=0
-Set-Cookie3: recsrch=initalltestsuites|wp; path="/"; domain=.reference.com; path_spec; expires="2013-02-10 08:32:24Z"; version=0
-Set-Cookie3: sid=UKC0GDrwQUc0oM9p; path="/"; domain=.reference.com; path_spec; expires="2012-11-12 09:02:24Z"; version=0
