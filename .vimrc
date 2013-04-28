@@ -1,169 +1,223 @@
-set nocompatible "不模仿vi模式
-syntax on "高亮
+set nocompatible          "不要兼容vi
+filetype off              "必须的设置：
+
+"Color Settings {
+"set colorcolumn=85           "彩色显示第85行
+set t_Co=256                 "设置256色显示
+set background=dark          "使用color solarized
+set cursorline               "设置光标高亮显示
+"set cursorcolumn             "光标垂直高亮
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+colorscheme solarized
+
+let g:solarized_termtrans  = 1
+let g:solarized_termcolors = 256
+let g:solarized_contrast   = "high"
+let g:solarized_visibility = "high"
+"}
+
+"tab setting {
 set tabstop=4
-set cindent shiftwidth=4
-set autoindent shiftwidth=4
-set nu
-set bg=dark
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+"}
 
-"color murphy
-colorscheme  native
-
-syntax enable
-
-if(has("win32") || has("win95") || has("win64") || has("win16"))
-	let g:vimrc_iswindows=1
-else
-	let g:vimrc_iswindows=0
-endif
-autocmd BufEnter * lcd %:p:h
-
-
-if has("autocmd")
-	filetype plugin indent on 
-	augroup vimrcEx
-		au!
-		autocmd FileType text setlocal textwidth=78
-		autocmd BufReadPost *
-					\ if line("'\"") > 1 && line("'\"") <= line("$") |
-					\ exe "normal! g`\"" |
-					\ endif
-	augroup END
-else 
-	set autoindent
-endif
-
-set incsearch
-set hlsearch
-set backspace=indent,eol,start whichwrap+=<,>,[,]
 set mouse=a
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set scrolloff=3
+set fenc=utf-8
+set autoindent
+set hidden
+"set encoding=utf-8
 
-set gfw=幼圆:h10:cGB2312
+"set laststatus=2
+set number                                    "显示行号
+"set undofile                                  "无限undo
+"set nowrap                                    "禁止自动换行
+"autocmd! bufwritepost _vimrc source %         "自动载入配置文件不需要重启
 
-"taglist
-"
-map <F3> :silent! Tlist<CR>
+"set relativenumber                             "相对行号 要想相对行号起作用要放在显示行号后面
+set wrap                                       "自动换行
+"set guifont=Inconsolata:h12                    "GUI界面里的字体，默认有抗锯齿
+set guifont=Consolas:h12
+set isk+=-                                     "将-连接符也设置为单词
+
+set ignorecase "设置大小写敏感和聪明感知(小写全搜，大写完全匹配)
+set smartcase
+"set gdefault
+set incsearch
+set showmatch
+set hlsearch
+
+set numberwidth=4          "行号栏的宽度
+"set columns=135           "初始窗口的宽度
+"set lines=50              "初始窗口的高度
+"winpos 620 45             "初始窗口的位置
+
+set whichwrap=b,s,<,>,[,]  "让退格，空格，上下箭头遇到行首行尾时自动移到下一行（包括insert模式）
+
+"插入模式下移动
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
+inoremap <c-h> <left>
+
+"===================================================
+"修改leader键为逗号
+let mapleader=","
+
+"使用tab键来代替%进行匹配跳转
+nnoremap <tab> %
+vnoremap <tab> %
+
+"折叠html标签 ,fold tag
+nnoremap <leader>ft vatzf
+"使用,v来选择刚刚复制的段落，这样可以用来缩进
+nnoremap <leader>v v`]
+
+"使用,w来垂直分割窗口，这样可以同时查看多个文件,如果想水平分割则<c-w>s
+"nnoremap <leader>w <c-w>v<c-w>l
+nnoremap <leader>wc <c-w>c
+nnoremap <leader>ww <c-w>w
+
+"tab切换
+nnoremap <leader>t gt
+nnoremap <leader>r gT
+"使用<leader>空格来取消搜索高亮
+nnoremap <leader><space> :noh<cr>
+
+"html中的js加注释 取消注释
+nmap <leader>h I//jj
+nmap <leader>ch ^xx
+"切换到当前目录
+nmap <leader>q :execute "cd" expand("%:h")<CR>
+
+"取消粘贴缩进
+nmap <leader>p :set paste<CR>
+nmap <leader>pp :set nopaste<CR>
+
+"文件类型切换
+nmap <leader>fj :set ft=javascript<CR>
+nmap <leader>fc :set ft=cpp<CR>
+nmap <leader>fx :set ft=xml<CR>
+nmap <leader>fm :set ft=mako<CR>
+
+"设置隐藏gvim的菜单和工具栏 F2切换
+set guioptions-=m
+set guioptions-=T
+"去除左右两边的滚动条
+set go-=r
+set go-=L
+
+map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <bar>
+    \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+    \endif<CR>
+
+
+"Indent Guides设置
+"let g:indent_guides_guide_size=1
+
+
+"Vundle Settings {
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+Bundle 'ctrlp.vim'
+Bundle 'AutoClose'
+Bundle 'ZenCoding.vim'
+Bundle 'matchit.zip'
+Bundle 'Tabular'
+Bundle 'syntasitc'
+Bundle 'Valloric/YouCompleteMe'
+"不让ycm每次查找.ycm_extra_conf.py文件"
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/Bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+
+Bundle 'spiiph/vim-space'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'trailing-whitespace'
+Bundle 'taglist.vim'
+Bundle 'ctags.vim'
 let Tlist_Ctags_Cmd='ctags'
 let Tlist_Use_Right_Window=1
 let Tlist_Show_One_File=0
-let Tlist_File_Fold_Auto_Close=1
+let Tlist_Auto_Open=1
+let Tlist_WinWidth=23
+let Tlist_Exit_OnlyWindow = 1
 
-"winmanager window
-let g:winManagerWindowLayout='FileExplorer|TagList'
-nmap wm :WMToggle<cr>
 
+Bundle 'cscope.vim'
 set tags +=~/.vim/systags
 set tags +=~/.vim/stltags
 set tags=./tags,./../tags,./**/tags
-" ctags and cscope
+"ctags and cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-map <F12> :silent! call Do_CsTag()<CR>
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-function Do_CsTag()
-	let dir = getcwd()
-	if filereadable("tags")
-		if(g:iswindows==1)
-			let tagsdeleted=delete(dir."\\"."tags")
-		else
-			let tagsdeleted=delete("./"."tags")
-		endif
-		if(tagsdeleted!=0)
-			echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-			return
-		endif
-	endif
-	if has("cscope")
-		silent! execute "cs kill -1"
-	endif
-	if filereadable("cscope.files")
-		if(g:iswindows==1)
-			let csfilesdeleted=delete(dir."\\"."cscope.files")
-		else
-			let csfilesdeleted=delete("./"."cscope.files")
-		endif
-		if(csfilesdeleted!=0)
-			echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
-			return
-		endif
-	endif
-	if filereadable("cscope.out")
-		if(g:iswindows==1)
-			let csoutdeleted=delete(dir."\\"."cscope.out")
-		else
-			let csoutdeleted=delete("./"."cscope.out")
-		endif
-		if(csoutdeleted!=0)
-			echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
-			return
-		endif
-	endif
-	if(executable('ctags'))
-		"silent! execute "!ctags -R --c-types=+p --fields=+S *"
-		silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-	endif
-	if(executable('cscope') && has("cscope") )
-		if(g:iswindows!=1)
-			silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-		else
-			silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-		endif
-		silent! execute "!cscope -b"
-		execute "normal :"
-		if filereadable("cscope.out")
-			execute "cs add cscope.out"
-		endif
-	endif
-endfunction
+nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
+nmap <leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
+nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+map <leader>l :call ToggleLocationList()<CR>
 
-set nocp 
-filetype plugin on 
-" configure tags - add additional tags here or comment out not-used ones 
-" load user definition tags 
-" set tags+=~/.vim/tags/stl 
+Bundle '_jsbeautify'
+nnoremap <leader>_ff :call g:Jsbeautify()<CR>
 
+Bundle 'EasyMotion'
+let g:EasyMotion_leader_key = '<Leader><Leader>'
 
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1 
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 1
-" set the max list in the popup menu. increase the speed
-let g:neocomplcache_max_list=20
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-	let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-let g:neocomplcache_auto_completion_start_length=1
-" ignore letter case
-let g:neocomplcache_enable_ignore_case=1
+"Fencview的初始设置
+"Bundle 'FencView.vim'
+"let g:fencview_autodetect=1
 
+Bundle 'The-NERD-tree'
+"设置相对行号
+nmap <leader>nt :NERDTree<cr>:set rnu<cr>
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeIgnore=['\.$','\~$']
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=23
+let NERDTreeAutoOpen=1
 
-"bracket auto-complete
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-:inoremap { {<CR>}<ESC>O
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-function! ClosePair(char)
-	if getline('.')[col('.') - 1] == a:char
-		return "\<Right>"
-	else
-		return a:char
-	endif
-endfunction
+Bundle 'The-NERD-Commenter'
+let NERDShutUp=1
+"支持单行和多行的选择，//格式
+map <c-h> ,c<space>
+
+Bundle 'UltiSnips'
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"}
+
+"放置在Bundle的设置后，防止意外BUG
+filetype plugin indent on
+syntax on
+
+func Make(cmd)
+    let _makeprg = &makeprg
+    let &makeprg = a:cmd
+    make
+    let &makeprg = _makeprg
+endf
+map <F2> :!date <CR>
+map <F5> :w<CR>:call Make("g++ % -o%:r -O2 -Wall")<CR>
+map <F6> :!./%:r<CR>
+map <F7> :w<CR>:call Make("g++ % -o%:r -g -Wall")<CR>
+map <F8> :!gdb ./%:r<CR>
+map <F9> :!time ./%:r < in.txt<CR>
