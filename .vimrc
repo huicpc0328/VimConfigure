@@ -132,17 +132,16 @@ call vundle#rc()
 " let Vundle manage Vundle
 " required!
 Bundle 'gmarik/vundle'
-
 Bundle 'ctrlp.vim'
 Bundle 'AutoClose'
 Bundle 'ZenCoding.vim'
-Bundle 'matchit.zip'
-Bundle 'Tabular'
-Bundle 'syntasitc'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'matchit.zip'
+"Bundle 'Tabular'
+"Bundle 'syntasitc'
+"Bundle 'Valloric/YouCompleteMe'
 "不让ycm每次查找.ycm_extra_conf.py文件"
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/Bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_global_ycm_extra_conf = '~/.vim/Bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 
 Bundle 'spiiph/vim-space'
 Bundle 'terryma/vim-multiple-cursors'
@@ -173,11 +172,11 @@ nmap <leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
 nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 map <leader>l :call ToggleLocationList()<CR>
 
-Bundle '_jsbeautify'
-nnoremap <leader>_ff :call g:Jsbeautify()<CR>
+"Bundle '_jsbeautify'
+"nnoremap <leader>_ff :call g:Jsbeautify()<CR>
 
-Bundle 'EasyMotion'
-let g:EasyMotion_leader_key = '<Leader><Leader>'
+"Bundle 'EasyMotion'
+"let g:EasyMotion_leader_key = '<Leader><Leader>'
 
 "Fencview的初始设置
 "Bundle 'FencView.vim'
@@ -199,7 +198,7 @@ let NERDShutUp=1
 "支持单行和多行的选择，//格式
 map <c-h> ,c<space>
 
-Bundle 'UltiSnips'
+"Bundle 'UltiSnips'
 "let g:UltiSnipsExpandTrigger="<c-j>"
 "let g:UltiSnipsJumpForwardTrigger="<c-j>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-k>"
